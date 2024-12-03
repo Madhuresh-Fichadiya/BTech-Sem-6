@@ -254,7 +254,7 @@ public List<StateDropDownModel> GetStateByCountryID(int CountryID)
                           asp-controller="City"
                           asp-action="Save">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        @Html.HiddenFor(x => x.CityID)
+                         <input asp-for="CityID" value="@Model.CityID" type="hidden" />
 
                         <div class="form-group">
                             <label for="CountryID" class="col-md-3 control-label"><span class="text-danger">*</span>Country Name</label>

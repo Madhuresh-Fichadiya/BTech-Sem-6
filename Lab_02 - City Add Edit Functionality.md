@@ -75,7 +75,7 @@ public IActionResult CityAddEdit(int? CityID)
                 model.CityCode = dr["CityCode"].ToString();
                 ViewBag.StateList = GetStateByCountryID(model.CountryID); // Load states for selected country
             }
-
+             GetStatesByCountry(model.CountryID);
             return View("CityAddEdit", model); // Return populated model to view
         }
     }
@@ -345,47 +345,39 @@ public List<StateDropDownModel> GetStateByCountryID(int CountryID)
 </main>
 @section Scripts {
     <script>
-        $(document).ready(function () {
-        // Triggered when the country dropdown (CountryID) changes
-        $("#CountryID").change(function () {
-            var countryId = $(this).val();  // Get the selected country ID
-            
-            // Check if a valid country is selected
-            if (countryId) {
-                // Make an AJAX request to fetch the states based on the selected country
-                $.ajax({
-                    url: '@Url.Action("GetStatesByCountry", "City")',  // URL for the GetStatesByCountry action in the City controller
-                    type: "POST",  // HTTP method set to POST
-                    data: { CountryID: countryId },  // Sending the selected CountryID as data in the request
-                    success: function (data) {
-                        // On success, empty the StateID dropdown and add a default option
-                        $("#StateID")
-                            .empty()
-                            .append('<option value="">Select State</option>');
-                        
-                        // Loop through the returned data (list of states) and populate the StateID dropdown
-                        $.each(data, function (i, state) {
-                            // Append each state as an option in the StateID dropdown
-                            $("#StateID").append(
-                                '<option value="' + state.stateID + '">' + state.stateName + "</option>"
-                            );
-                        });
-                        // Log the stateID for debugging purposes (optional)
-                        console.log(state.stateID);
-                    },
-                    error: function (xhr, status, error) {
-                        // On error, log the error to the console for debugging
-                        console.error(error);
-                    },
-                });
-            } else {
-                // If no country is selected, reset the StateID dropdown to the default option
-                $("#StateID").empty().append('<option value="">Select State</option>');
-            }
-        });
-    });
-  });
-  </script>
+       $(document).ready(function () {
+           $("#CountryID").change(function () {
+               var countryId = $(this).val();
+               if (countryId) {
+                   $.ajax({
+                       url: '@Url.Action("GetStatesByCountry", "City")',
+                       type: "POST", // Changed to POST
+                       data: { CountryID: countryId }, // Use 'CountryID' to match controller
+                       success: function (data) {
+                           $("#StateID")
+                               .empty()
+                               .append('<option value="">Select State</option>');
+                           $.each(data, function (i, state) {
+                               $("#StateID").append(
+                                   '<option value="' +
+                                   state.stateID +
+                                   '">' +
+                                   state.stateName +
+                                   "</option>"
+                               );
+                           });
+                           console.log(state.stateID);
+                       },
+                       error: function (xhr, status, error) {
+                           console.error(error);
+                       },
+                   });
+               } else {
+                   $("#StateID").empty().append('<option value="">Select State</option>');
+               }
+           });
+       });
+   </script>
 }
 ```
 

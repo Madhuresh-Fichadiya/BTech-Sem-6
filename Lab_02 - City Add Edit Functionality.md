@@ -223,142 +223,170 @@ public List<StateDropDownModel> GetStateByCountryID(int CountryID)
 ### 5. **City Add/Edit View**
 
 ```html
-@{ ViewData["Title"] = "City Add/Edit"; Layout =
-"~/Views/Shared/_Layout.cshtml"; } @model CoffeeShop.Models.CityModel
+@{
+    ViewData["Title"] = "City Add/Edit"; Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model CoffeeShop.Models.CityModel
+
 
 <main id="main" class="main">
-  <div class="container">
+<div class="container">
     <div class="row">
-      <div class="col-md-12">
-        <div class="page-header">
-          <h1>City Add/Edit</h1>
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1>City Add/Edit</h1>
+            </div>
         </div>
-      </div>
     </div>
 
     <div class="row">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">City Add/Edit</h3>
-          </div>
-          <div class="panel-body">
-            <h4 class="text-success">@TempData["CityInsertMessage"]</h4>
-            <form
-              class="form-horizontal"
-              role="form"
-              method="post"
-              asp-controller="City"
-              asp-action="Save"
-            >
-              <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-              @Html.HiddenFor(x => x.CityID)
-
-              <div class="form-group">
-                <label for="CountryID" class="col-md-3 control-label"
-                  ><span class="text-danger">*</span>Country Name</label
-                >
-                <div class="col-md-9">
-                  <select
-                    id="CountryID"
-                    name="CountryID"
-                    class="form-control"
-                    asp-for="CountryID"
-                  >
-                    <option value="">Select Country</option>
-                    @foreach (var country in ViewBag.CountryList) {
-                    <option value="@country.CountryID">
-                      @country.CountryName
-                    </option>
-                    }
-                  </select>
-                  <span
-                    asp-validation-for="CountryID"
-                    class="text-danger"
-                  ></span>
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">City Add/Edit</h3>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="StateID" class="col-md-3 control-label"
-                  ><span class="text-danger">*</span>State Name</label
-                >
-                <div class="col-md-9">
-                  <select
-                    id="StateID"
-                    name="StateID"
-                    class="form-control"
-                    asp-for="StateID"
-                  >
-                    <option value="">Select State</option>
-                    @if (ViewBag.StateList != null) { foreach (var state in
-                    ViewBag.StateList) {
-                    <option value="@state.StateID">@state.StateName</option>
-                    } }
-                  </select>
-                  <span asp-validation-for="StateID" class="text-danger"></span>
-                </div>
-              </div>
+                <div class="panel-body">
+                    <h4 class="text-success">@TempData["CityInsertMessage"]</h4>
+                    <form class="form-horizontal"
+                          role="form"
+                          method="post"
+                          asp-controller="City"
+                          asp-action="Save">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        @Html.HiddenFor(x => x.CityID)
 
-              <div
-                class="
+                        <div class="form-group">
+                            <label for="CountryID" class="col-md-3 control-label"><span class="text-danger">*</span>Country Name</label>
+                            <div class="col-md-9">
+                                <select id="CountryID"
+                                        name="CountryID"
+                                        class="form-control"
+                                        asp-for="CountryID">
+                                    <option value="">Select Country</option>
+                                    @foreach (var country in ViewBag.CountryList)
+                                    {
+                                        <option value="@country.CountryID">
+                                            @country.CountryName
+                                        </option>
+                                    }
+                                </select>
+                                <span asp-validation-for="CountryID" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="StateID" class="col-md-3 control-label"><span class="text-danger">*</span>State Name</label>
+                            <div class="col-md-9">
+                                <select id="StateID"
+                                        name="StateID"
+                                        class="form-control"
+                                        asp-for="StateID">
+                                    <option value="">Select State</option>
+                                    @if (ViewBag.StateList != null)
+                                    {
+                                        foreach (var state in
+                                                            ViewBag.StateList)
+                                        {
+                                            if (state.StateID == Model.StateID)
+                                            {
+                                                <option value="@state.StateID">@state.StateName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@state.StateID">@state.StateName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="StateID" class="text-danger"></span>
+                            </div>
+                        </div>
 
-form-group"
-              >
-                <label for="CityName" class="col-md-3 control-label"
-                  ><span class="text-danger">*</span>City Name</label
-                >
-                <div class="col-md-9">
-                  <input
-                    type="text"
-                    name="CityName"
-                    class="form-control"
-                    asp-for="CityName"
-                    placeholder="City Name"
-                  />
-                  <span
-                    asp-validation-for="CityName"
-                    class="text-danger"
-                  ></span>
-                </div>
-              </div>
+                        <div class="form-group">
+                            <label for="CityName" class="col-md-3 control-label"><span class="text-danger">*</span>City Name</label>
+                            <div class="col-md-9">
+                                <input type="text"
+                                       id="CityName"
+                                       name="CityName"
+                                       class="form-control"
+                                       asp-for="CityName"
+                                       placeholder="Enter City Name" />
+                                <span asp-validation-for="CityName" class="text-danger"></span>
+                            </div>
+                        </div>
 
-              <div class="form-group">
-                <label for="CityCode" class="col-md-3 control-label"
-                  ><span class="text-danger">*</span>City Code</label
-                >
-                <div class="col-md-9">
-                  <input
-                    type="text"
-                    name="CityCode"
-                    class="form-control"
-                    asp-for="CityCode"
-                    placeholder="City Code"
-                  />
-                  <span
-                    asp-validation-for="CityCode"
-                    class="text-danger"
-                  ></span>
-                </div>
-              </div>
+                        <div class="form-group">
+                            <label for="CityCode" class="col-md-3 control-label"><span class="text-danger">*</span>City Code</label>
+                            <div class="col-md-9">
+                                <input type="text"
+                                       id="CityCode"
+                                       name="CityCode"
+                                       class="form-control"
+                                       asp-for="CityCode"
+                                       placeholder="Enter City Code" />
+                                <span asp-validation-for="CityCode" class="text-danger"></span>
+                            </div>
+                        </div>
 
-              <div class="form-group">
-                <div class="col-md-9 col-md-offset-3">
-                  <button type="submit" class="btn btn-primary">
-                    @if (Model.CityID == null) {
-                    <span>Add</span>
-                    } else {
-                    <span>Update</span>
-                    }
-                  </button>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-9">
+                                <input type="submit" class="btn btn-success" value="Save" />
+                                <a class="btn btn-default"
+                                   asp-controller ="City"
+                                   asp-action="Index">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-              </div>
-            </form>
-          </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 </main>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+        // Triggered when the country dropdown (CountryID) changes
+        $("#CountryID").change(function () {
+            var countryId = $(this).val();  // Get the selected country ID
+            
+            // Check if a valid country is selected
+            if (countryId) {
+                // Make an AJAX request to fetch the states based on the selected country
+                $.ajax({
+                    url: '@Url.Action("GetStatesByCountry", "City")',  // URL for the GetStatesByCountry action in the City controller
+                    type: "POST",  // HTTP method set to POST
+                    data: { CountryID: countryId },  // Sending the selected CountryID as data in the request
+                    success: function (data) {
+                        // On success, empty the StateID dropdown and add a default option
+                        $("#StateID")
+                            .empty()
+                            .append('<option value="">Select State</option>');
+                        
+                        // Loop through the returned data (list of states) and populate the StateID dropdown
+                        $.each(data, function (i, state) {
+                            // Append each state as an option in the StateID dropdown
+                            $("#StateID").append(
+                                '<option value="' + state.stateID + '">' + state.stateName + "</option>"
+                            );
+                        });
+                        // Log the stateID for debugging purposes (optional)
+                        console.log(state.stateID);
+                    },
+                    error: function (xhr, status, error) {
+                        // On error, log the error to the console for debugging
+                        console.error(error);
+                    },
+                });
+            } else {
+                // If no country is selected, reset the StateID dropdown to the default option
+                $("#StateID").empty().append('<option value="">Select State</option>');
+            }
+        });
+    });
+  });
+  </script>
+}
 ```
 
 ---

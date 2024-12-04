@@ -1,5 +1,5 @@
 # City Add/Edit Functionality in ASP.NET Core MVC
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
 ## Steps to Implement
 
 ### 1. **Setup Stored Procedures**

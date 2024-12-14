@@ -20,9 +20,7 @@
 
 - Open `appsettings.json` and add the API base URL:
   ```json
-  {
     "WebApiBaseUrl": "https://localhost:7004/"
-  }
   ```
 - Ensure the API project is running on this URL or modify it accordingly.
 

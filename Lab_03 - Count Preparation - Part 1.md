@@ -1,12 +1,12 @@
 # Count Preparation - Part 1
 
 ## Overview
-This guide provides instructions for modifying the database and API to include the count of cities in each state. The changes include updating a stored procedure, adding a new field to the CityModel, and updating the StateRepository for API integration.
+This guide provides instructions for modifying the database and API to include the count of cities in each state. The changes include updating a stored procedure, adding a new field to the StateModel, and updating the StateRepository for API integration.
 
 ---
 
 ## Step 1: Alter the Stored Procedure
-Update the stored procedure to include the city count for each state.
+Update the stored procedure to include the State count for each state.
 
 ```sql
 ALTER PROCEDURE [dbo].[PR_LOC_State_SelectAll]
@@ -20,13 +20,13 @@ BEGIN
         [dbo].[Country].[CountryName],
         [dbo].[State].[CreatedDate],
         [dbo].[State].[ModifiedDate],
-        COUNT([dbo].[City].[CityID]) AS CityCount
+        COUNT([dbo].[City].[StateID]) AS CityCount
     FROM
         [dbo].[State]
     LEFT OUTER JOIN
         [dbo].[Country] ON [dbo].[Country].[CountryID] = [dbo].[State].[CountryID]
     LEFT OUTER JOIN
-        [dbo].[City] ON [dbo].[City].[StateID] = [dbo].[State].[StateID]
+        [dbo].[City] ON [dbo].[State].[StateID] = [dbo].[City].[StateID]
     GROUP BY
         [dbo].[State].[StateID],
         [dbo].[State].[StateName],
@@ -40,17 +40,18 @@ END;
 
 ---
 
-## Step 2: Update the CityModel
-Add a new field CityCount to the CityModel in the API.
+## Step 2: Update the StateModel
+Add a new field StateCount to the StateModel in the API.
 
 ### Code Changes:
-*CityModel.cs*
+*StateModel.cs*
 ```csharp
-public class CityModel
+public class StateModel
 {
     public int StateID { get; set; }
-    public string CityName { get; set; }
-    public string CityCode { get; set; }
+    public string StateName { get; set; }
+    public string StateCode { get; set; }
+    public int CountryID { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime ModifiedDate { get; set; }
     public int CityCount { get; set; } // New field
@@ -60,14 +61,14 @@ public class CityModel
 ---
 
 ## Step 3: Update the StateRepository
-Modify the repository to include the CityCount field in the database query result mapping.
+Modify the repository to include the StateCount field in the database query result mapping.
 
 ### Code Changes:
 *StateRepository.cs*
 ```csharp
-public List<CityModel> GetCities()
+public List<StateModel> GetCities()
 {
-    List<CityModel> cities = new List<CityModel>();
+    List<StateModel> cities = new List<StateModel>();
 
     using (SqlCommand cmd = new SqlCommand("PR_LOC_State_SelectAll", connection))
     {
@@ -78,16 +79,16 @@ public List<CityModel> GetCities()
         {
             while (reader.Read())
             {
-                CityModel city = new CityModel
+                StateModel State = new StateModel
                 {
                     StateID = reader.GetInt32(reader.GetOrdinal("StateID")),
-                    CityName = reader.GetString(reader.GetOrdinal("CityName")),
-                    CityCode = reader.GetString(reader.GetOrdinal("CityCode")),
+                    StateName = reader.GetString(reader.GetOrdinal("StateName")),
+                    StateCode = reader.GetString(reader.GetOrdinal("StateCode")),
                     CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
                     ModifiedDate = reader.GetDateTime(reader.GetOrdinal("ModifiedDate")),
-                    CityCount = reader.GetInt32(reader.GetOrdinal("CityCount")) // Mapping CityCount
+                    CityCount = reader.GetInt32(reader.GetOrdinal("CityCount")) // Mapping StateCount
                 };
-                cities.Add(city);
+                cities.Add(State);
             }
         }
     }
@@ -98,8 +99,8 @@ public List<CityModel> GetCities()
 
 ---
 
-## Step 4: Add CityCount Field in ConsumeAPI State Model
-Update the ConsumeAPI State Model to include the CityCount field.
+## Step 4: Add StateCount Field in ConsumeAPI State Model
+Update the ConsumeAPI State Model to include the StateCount field.
 
 ### Code Changes:
 *StateModel.cs*
@@ -119,8 +120,8 @@ public class StateModel
 
 ---
 
-## Step 5: Add CityCount Field in View Page
-Update the view page to display the CityCount field in the table.
+## Step 5: Add StateCount Field in View Page
+Update the view page to display the StateCount field in the table.
 
 ### Code Changes:
 *View.cshtml*
@@ -137,15 +138,15 @@ Update the view page to display the CityCount field in the table.
         </tr>
     </thead>
     <tbody>
-        @foreach (var city in Model)
+        @foreach (var State in Model)
         {
             <tr>
-                <td>@city.StateID</td>
-                <td>@city.StateName</td>
-                <td>@city.StateCode</td>
-                <td>@city.CountryID</td>
-                <td>@city.CountryName</td>
-                <td>@city.CityCount</td>
+                <td>@State.StateID</td>
+                <td>@State.StateName</td>
+                <td>@State.StateCode</td>
+                <td>@State.CountryID</td>
+                <td>@State.CountryName</td>
+                <td>@State.CityCount</td>
             </tr>
         }
     </tbody>
@@ -155,8 +156,8 @@ Update the view page to display the CityCount field in the table.
 ---
 
 ## Testing the Changes
-1. Run the updated stored procedure in SQL Server to verify the results include the CityCount column.
-2. Test the API endpoint that retrieves cities and ensure the CityCount is correctly populated in the response.
+1. Run the updated stored procedure in SQL Server to verify the results include the StateCount column.
+2. Test the API endpoint that retrieves cities and ensure the StateCount is correctly populated in the response.
 3. Verify that the changes work with the frontend or any consumer of the API.
 
 ---

@@ -66,9 +66,9 @@ Modify the repository to include the StateCount field in the database query resu
 ### Code Changes:
 *StateRepository.cs*
 ```csharp
-public List<StateModel> GetCities()
+public List<StateModel> GetStates()
 {
-    List<StateModel> cities = new List<StateModel>();
+    List<StateModel> states = new List<StateModel>();
 
     using (SqlCommand cmd = new SqlCommand("PR_LOC_State_SelectAll", connection))
     {
@@ -88,7 +88,7 @@ public List<StateModel> GetCities()
                     ModifiedDate = reader.GetDateTime(reader.GetOrdinal("ModifiedDate")),
                     CityCount = reader.GetInt32(reader.GetOrdinal("CityCount")) // Mapping StateCount
                 };
-                cities.Add(State);
+                states.Add(State);
             }
         }
     }

@@ -90,15 +90,19 @@ namespace api.Validators
         public CountryValidator()
         {
             RuleFor(c => c.CountryName)
-                .NotNull().WithMessage("Country name must not be empty.")
-                .Length(3, 20).WithMessage("Country name must be between 3 and 20 characters.");
+                 .NotNull().WithMessage("Country name must not be empty.")
+                 .Length(3, 20).WithMessage("Country name must be between 3 and 20 characters.")
+                 .Matches("^[A-Za-z ]*$").WithMessage("Country name must contain only letters and spaces."); // Ensures only letters and spaces are allowed
 
             RuleFor(c => c.CountryCode)
                 .NotNull().WithMessage("Country code must not be empty.")
-                .MaximumLength(4).WithMessage("Country code must not exceed 4 characters.");
+                .MaximumLength(4).WithMessage("Country code must not exceed 4 characters.")
+                .Matches("^[A-Za-z]{2,4}$").WithMessage("Country code must contain only letters and be between 2 to 4 characters.");
+
         }
     }
 }
+
 ```
 
 ---

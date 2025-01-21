@@ -43,7 +43,6 @@ namespace DDL_MVC.Controllers
             {
                 BaseAddress = new System.Uri(_configuration["WebApiBaseUrl"])
             };
-            _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
         }
 
 

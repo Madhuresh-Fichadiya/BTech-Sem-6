@@ -36,7 +36,7 @@ public class ApplicationDBContext : DbContext
  public DbSet<Employee> Employee { get; set; }
  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
  {
-    optionsBuilder.UseSqlServer(@"Data Source=MRF\\SQLEXPRESS;Initial Catalog=StudentRegistration; Trusted_Connection=true;TrustServerCertificate=True;");//change your connection as required
+    optionsBuilder.UseSqlServer(@"Data Source=MRF\SQLEXPRESS;Initial Catalog=StudentRegistration; Trusted_Connection=true;TrustServerCertificate=True;");//change your connection as required
  }
 }
 ```

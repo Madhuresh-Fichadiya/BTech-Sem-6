@@ -1,53 +1,72 @@
 ## Consider Following Data Set
 ```csharp
-public class Student
-{
-    public int StudentID { get; set; }
-    public string Name { get; set; }
-    public int Marks { get; set; }
-    public string Grade { get; set; }
-}
-
 public class Employee
 {
     public int EmployeeID { get; set; }
     public string Name { get; set; }
-    public double Salary { get; set; }
     public string Department { get; set; }
-    public int Experience { get; set; }
+    public double Salary { get; set; }
+    public List<string> Skills { get; set; }
+    public int Age { get; set; }
+    public bool IsPermanent { get; set; }
 }
 
-public class Product
+public class Department
 {
-    public int ProductID { get; set; }
     public string Name { get; set; }
-    public double Price { get; set; }
-    public int Stock { get; set; }
-    public string Category { get; set; }
+    public string Location { get; set; }
 }
-var students = new List<Student>
+
+public class Skill
 {
-    new Student { StudentID = 1, Name = "Alice", Marks = 85, Grade = "A" },
-    new Student { StudentID = 2, Name = "Bob", Marks = 70, Grade = "B" },
-    new Student { StudentID = 3, Name = "Charlie", Marks = 60, Grade = "C" },
-    new Student { StudentID = 4, Name = "David", Marks = 95, Grade = "A" },
-    new Student { StudentID = 5, Name = "Eve", Marks = 45, Grade = "D" }
-};
+    public int EmployeeID { get; set; }
+    public string SkillName { get; set; }
+}
 
 var employees = new List<Employee>
 {
-    new Employee { EmployeeID = 1, Name = "John", Salary = 60000, Department = "IT", Experience = 5 },
-    new Employee { EmployeeID = 2, Name = "Sara", Salary = 45000, Department = "HR", Experience = 3 },
-    new Employee { EmployeeID = 3, Name = "Mike", Salary = 70000, Department = "Finance", Experience = 7 },
-    new Employee { EmployeeID = 4, Name = "Anna", Salary = 90000, Department = "IT", Experience = 10 }
+    new Employee { EmployeeID = 1, Name = "John", Department = "IT", Salary = 5000, Skills = new List<string> { "C#", "SQL" }, Age = 30, IsPermanent = true },
+    new Employee { EmployeeID = 2, Name = "Emma", Department = "HR", Salary = 4000, Skills = new List<string> { "Communication", "Management" }, Age = 28, IsPermanent = false },
+    new Employee { EmployeeID = 3, Name = "Michael", Department = "IT", Salary = 7000, Skills = new List<string> { "Java", "Python" }, Age = 35, IsPermanent = true },
+    new Employee { EmployeeID = 4, Name = "Sophia", Department = "Finance", Salary = 6000, Skills = new List<string> { "Accounting", "Excel" }, Age = 32, IsPermanent = true },
+    new Employee { EmployeeID = 5, Name = "Daniel", Department = "IT", Salary = 5500, Skills = new List<string> { "C#", "JavaScript" }, Age = 27, IsPermanent = false },
+    new Employee { EmployeeID = 6, Name = "Olivia", Department = "Marketing", Salary = 4800, Skills = new List<string> { "SEO", "Advertising" }, Age = 29, IsPermanent = true },
+    new Employee { EmployeeID = 7, Name = "David", Department = "IT", Salary = 6500, Skills = new List<string> { "Python", "Machine Learning" }, Age = 40, IsPermanent = true },
+    new Employee { EmployeeID = 8, Name = "Liam", Department = "HR", Salary = 4200, Skills = new List<string> { "Public Relations", "Recruiting" }, Age = 26, IsPermanent = false },
+    new Employee { EmployeeID = 9, Name = "Isabella", Department = "Finance", Salary = 5800, Skills = new List<string> { "Budgeting", "Taxation" }, Age = 31, IsPermanent = true },
+    new Employee { EmployeeID = 10, Name = "Ethan", Department = "Marketing", Salary = 5200, Skills = new List<string> { "Social Media", "Copywriting" }, Age = 33, IsPermanent = false }
 };
 
-var products = new List<Product>
+var departments = new List<Department>
 {
-    new Product { ProductID = 1, Name = "Laptop", Price = 1000, Stock = 10, Category = "Electronics" },
-    new Product { ProductID = 2, Name = "Phone", Price = 500, Stock = 5, Category = "Electronics" },
-    new Product { ProductID = 3, Name = "Shirt", Price = 30, Stock = 50, Category = "Clothing" },
-    new Product { ProductID = 4, Name = "Pants", Price = 40, Stock = 30, Category = "Clothing" }
+    new Department { Name = "IT", Location = "New York" },
+    new Department { Name = "HR", Location = "Los Angeles" },
+    new Department { Name = "Finance", Location = "Chicago" },
+    new Department { Name = "Marketing", Location = "San Francisco" }
+};
+
+var skills = new List<Skill>
+{
+    new Skill { EmployeeID = 1, SkillName = "C#" },
+    new Skill { EmployeeID = 1, SkillName = "SQL" },
+    new Skill { EmployeeID = 2, SkillName = "Communication" },
+    new Skill { EmployeeID = 2, SkillName = "Management" },
+    new Skill { EmployeeID = 3, SkillName = "Java" },
+    new Skill { EmployeeID = 3, SkillName = "Python" },
+    new Skill { EmployeeID = 4, SkillName = "Accounting" },
+    new Skill { EmployeeID = 4, SkillName = "Excel" },
+    new Skill { EmployeeID = 5, SkillName = "C#" },
+    new Skill { EmployeeID = 5, SkillName = "JavaScript" },
+    new Skill { EmployeeID = 6, SkillName = "SEO" },
+    new Skill { EmployeeID = 6, SkillName = "Advertising" },
+    new Skill { EmployeeID = 7, SkillName = "Python" },
+    new Skill { EmployeeID = 7, SkillName = "Machine Learning" },
+    new Skill { EmployeeID = 8, SkillName = "Public Relations" },
+    new Skill { EmployeeID = 8, SkillName = "Recruiting" },
+    new Skill { EmployeeID = 9, SkillName = "Budgeting" },
+    new Skill { EmployeeID = 9, SkillName = "Taxation" },
+    new Skill { EmployeeID = 10, SkillName = "Social Media" },
+    new Skill { EmployeeID = 10, SkillName = "Copywriting" }
 };
 ```
 

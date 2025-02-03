@@ -10,19 +10,6 @@ public class Employee
     public int Age { get; set; }
     public bool IsPermanent { get; set; }
 }
-
-public class Department
-{
-    public string Name { get; set; }
-    public string Location { get; set; }
-}
-
-public class Skill
-{
-    public int EmployeeID { get; set; }
-    public string SkillName { get; set; }
-}
-
 var employees = new List<Employee>
 {
     new Employee { EmployeeID = 1, Name = "John", Department = "IT", Salary = 5000, Skills = new List<string> { "C#", "SQL" }, Age = 30, IsPermanent = true },
@@ -35,38 +22,6 @@ var employees = new List<Employee>
     new Employee { EmployeeID = 8, Name = "Liam", Department = "HR", Salary = 4200, Skills = new List<string> { "Public Relations", "Recruiting" }, Age = 26, IsPermanent = false },
     new Employee { EmployeeID = 9, Name = "Isabella", Department = "Finance", Salary = 5800, Skills = new List<string> { "Budgeting", "Taxation" }, Age = 31, IsPermanent = true },
     new Employee { EmployeeID = 10, Name = "Ethan", Department = "Marketing", Salary = 5200, Skills = new List<string> { "Social Media", "Copywriting" }, Age = 33, IsPermanent = false }
-};
-
-var departments = new List<Department>
-{
-    new Department { Name = "IT", Location = "New York" },
-    new Department { Name = "HR", Location = "Los Angeles" },
-    new Department { Name = "Finance", Location = "Chicago" },
-    new Department { Name = "Marketing", Location = "San Francisco" }
-};
-
-var skills = new List<Skill>
-{
-    new Skill { EmployeeID = 1, SkillName = "C#" },
-    new Skill { EmployeeID = 1, SkillName = "SQL" },
-    new Skill { EmployeeID = 2, SkillName = "Communication" },
-    new Skill { EmployeeID = 2, SkillName = "Management" },
-    new Skill { EmployeeID = 3, SkillName = "Java" },
-    new Skill { EmployeeID = 3, SkillName = "Python" },
-    new Skill { EmployeeID = 4, SkillName = "Accounting" },
-    new Skill { EmployeeID = 4, SkillName = "Excel" },
-    new Skill { EmployeeID = 5, SkillName = "C#" },
-    new Skill { EmployeeID = 5, SkillName = "JavaScript" },
-    new Skill { EmployeeID = 6, SkillName = "SEO" },
-    new Skill { EmployeeID = 6, SkillName = "Advertising" },
-    new Skill { EmployeeID = 7, SkillName = "Python" },
-    new Skill { EmployeeID = 7, SkillName = "Machine Learning" },
-    new Skill { EmployeeID = 8, SkillName = "Public Relations" },
-    new Skill { EmployeeID = 8, SkillName = "Recruiting" },
-    new Skill { EmployeeID = 9, SkillName = "Budgeting" },
-    new Skill { EmployeeID = 9, SkillName = "Taxation" },
-    new Skill { EmployeeID = 10, SkillName = "Social Media" },
-    new Skill { EmployeeID = 10, SkillName = "Copywriting" }
 };
 ```
 

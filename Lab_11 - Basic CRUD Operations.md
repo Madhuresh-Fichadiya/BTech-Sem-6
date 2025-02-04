@@ -69,12 +69,7 @@ public class Student
     "DefaultConnection": "Your_SQL_Server_Connection_String_Here"
 }
 ```
-## Step 4: Register ApplicationDbContext with dependency injection in Program.cs
-```csharp
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-```
-## Step 5: Prepare ApplicationDbContext class
+## Step 4: Prepare ApplicationDbContext class
 Create a Data folder in root directory and add ApplicationDbContext inside Data folder.
 ```csharp
 public class ApplicationDbContext: DbContext
@@ -97,6 +92,11 @@ public class ApplicationDbContext: DbContext
         optionsBuilder.UseSqlServer(this.configuration.GetConnectionString("Default"));
     }
 }
+```
+## Step 4: Register ApplicationDbContext with dependency injection in Program.cs
+```csharp
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 ```
 ## Step 6: Add Migration to generate Database
 - run following commands in Package Manager Console

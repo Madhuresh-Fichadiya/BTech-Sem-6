@@ -93,7 +93,7 @@ public class ApplicationDbContext: DbContext
     }
 }
 ```
-## Step 4: Register ApplicationDbContext with dependency injection in Program.cs
+## Step 5: Register ApplicationDbContext with dependency injection in Program.cs
 ```csharp
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

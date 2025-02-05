@@ -4,7 +4,7 @@
 
 **- Microsoft.EntityFrameworkCore.Tools**
 
-**- System.ComponentModel.DataAnnotations**
+**- System.ComponentModel.Annotations**
 ## Step 2: Prepare Model classes
 - Course- CourseId, CourseName
 - Student - StudentId, Name, Enrollment, Semester

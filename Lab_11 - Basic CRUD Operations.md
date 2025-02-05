@@ -89,7 +89,7 @@ public class ApplicationDbContext: DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // SQL Server connection string.
-        optionsBuilder.UseSqlServer(this.configuration.GetConnectionString("Default"));
+        optionsBuilder.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection"));
     }
 }
 ```

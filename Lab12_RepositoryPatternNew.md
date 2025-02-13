@@ -80,7 +80,7 @@ In your `appsettings.json` file, add the connection string:
 
 ```json
 "ConnectionStrings": {
-    "DBConnection": "Server=//Your SQL Server name;Initial Catalog=//Your Db Table;Trusted_Connection=True;Encrypt=False"
+    "DBConnection": "Server=//Your SQL Server name;Initial Catalog=//Your Db;Trusted_Connection=True;Encrypt=False"
 }
 ```
 

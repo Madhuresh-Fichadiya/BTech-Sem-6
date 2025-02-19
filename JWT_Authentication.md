@@ -171,7 +171,7 @@ public class Student
 }
 ```
 
-# Steps for consume project code
+# Steps for consume project
 ## Step 1: Add Authentication service as follows
 ```csharp
 public class AuthService

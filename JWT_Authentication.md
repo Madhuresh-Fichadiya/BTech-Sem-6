@@ -12,7 +12,7 @@
 "Jwt": {
   "Key": "ThisIsASecretKeyForJwtTokenGeneration",//replace your key
   "Issuer": "https://localhost:5001",
-  "Audience": "https://localhost:5001"
+  "Audience": "*"
 }
 ```
 ## Step 3: Add authentication service in Program.cs file
@@ -234,23 +234,19 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(string Username, string Password)
     {
-        var token = await _authService.AuthenticateUserAsync(Username, Password);
-
-        if (token == null)
-        {
-            ViewBag.Error = "Invalid credentials.";
-            return View();
-        }
-
-        _httpContextAccessor.HttpContext.Session.SetString("JWTToken", token);
-        return RedirectToAction("Dashboard");
-    }
-
-    public IActionResult Dashboard()
-    {
-        var token = _httpContextAccessor.HttpContext.Session.GetString("JWTToken");
-        ViewBag.Token = token;
-        return View();
+         var jsonData = await _authService.AuthenticateUserAsync(Username, Password);
+         var data = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(jsonData);
+         string token = data["token"];
+         
+         if (token == null)
+         {
+             ViewBag.Error = "Invalid credentials.";
+             return View();
+         }
+    
+         _httpContextAccessor.HttpContext.Session.SetString("JWTToken", token);
+    
+         return RedirectToAction("Index", "Home");
     }
 
     public IActionResult Logout()
@@ -288,3 +284,65 @@ public class AuthController : Controller
     </div>
 </form>
 ```
+## Step 5: Add Controller file as follows
+```csharp
+public class HomeController : Controller
+{
+    private readonly ILogger<HomeController> _logger;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly HttpClient _httpClient;
+    public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, HttpClient httpClient)
+    {
+        _logger = logger;
+        _httpContextAccessor = httpContextAccessor;
+        _httpClient = httpClient;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var token = _httpContextAccessor.HttpContext.Session.GetString("JWTToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            TempData["ErrorMessage"] = "User not authenticated. Please log in.";
+            return RedirectToAction("Login", "Auth");
+        }
+        Console.WriteLine(token);
+
+         var client = new HttpClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7228/api/Home");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await client.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var result = response.Content.ReadAsStringAsync().Result;
+            ViewBag.Data = result;
+            //return result; // JWT Token
+        }
+        else
+        {
+            TempData["ErrorMessage"] = "Unable to fetch customer data. Please try again later.";
+        }
+        return View("Dashboard");
+    }
+}
+```
+## Step 6: Add View Page
+```csharp
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2>Dashboard</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <p>@TempData["ErrorMessage"]</p>
+}
+else
+{
+    <p>@ViewBag.Data</p>
+}
+```
+

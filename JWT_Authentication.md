@@ -1,6 +1,6 @@
-# How to Implement JWT Token
+# How to Implement Json Web Token
 
-## Steps to Implementation JWT Token for API project
+## Steps to Implementation Jwt for API project
 ## Step 1: Add following packages
 
 - Microsoft.AspNetCore.Authentication.JwtBearer

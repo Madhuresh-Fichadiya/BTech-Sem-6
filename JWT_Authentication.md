@@ -200,8 +200,19 @@ public class AuthService
     }
 }
 ```
+## Step 2: Configure following in Program.cs
 
-## Step 2: Add Authentication Controller
+```csharp
+  builder.Services.AddHttpClient<AuthService>();
+  // Register HttpContextAccessor
+  builder.Services.AddHttpContextAccessor();
+  // Enable session support
+  builder.Services.AddSession();
+
+app.UseAuthorization();
+app.UseSession(); // Enable session
+```
+## Step 3: Add Authentication Controller
 ```csharp
 public class AuthController : Controller
 {
@@ -249,7 +260,7 @@ public class AuthController : Controller
     }
 }
 ```
-## Step 3: Login page design
+## Step 4  : Login page design
 ```csharp
 @model UserModel;
 @{
